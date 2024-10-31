@@ -1,0 +1,142 @@
+// 1- escribe al menos 3 metodos para poder imprimir un array de manera inversa.
+
+// a) reverse method
+const array = [1, 2, 3, 4, 5];
+console.log(array);
+array.reverse();
+console.log(array);
+
+// b) for method
+let arr2 = [];
+console.log(array);
+for (let i = array.length - 1; i >= 0; i--) {
+  arr2.push(array[i]);
+}
+console.log(arr2);
+
+// c) unshift method
+const arr3 = [1, 2, 3, 4, 5];
+let arr4 = [];
+console.log(arr3);
+arr3.forEach((elemento) => {
+  arr4.unshift(elemento);
+});
+console.log(arr4);
+
+// d) reduce method
+const arr5 = [1, 2, 3, 4, 5];
+let arr6 = [];
+console.log(arr5);
+arr6 = arr5.reduce((q, w) => [w].concat(q), []);
+console.log(arr6);
+
+// e) map method
+const arr7 = [1, 2, 3, 4, 5];
+console.log(arr7);
+let arr8 = [];
+arr8 = arr7.map((item, indx) => arr7[arr7.length - 1 - indx]);
+console.log(arr8);
+
+// 2- escribe una funcipon que permita validar el cierre correcto de parentesis
+function validarExpresion(exp) {
+  const arr = [];
+  const par = {
+    "(": ")",
+    "{": "}",
+    "[": "]",
+  };
+
+  for (let i = 0; i < exp.length; i++) {
+    const char = exp[i];
+    if (char in par) {
+      arr.push(char);
+    } else if (char === ")" || char === "}" || char === "]") {
+      const llaveFinal = arr.pop();
+      if (!llaveFinal || par[llaveFinal] !== char) {
+        return false;
+      }
+    }
+  }
+  return arr.length === 0;
+}
+const exp = "()(())()";
+console.log(validarExpresion(exp));
+
+// 3- indicar si un string es palindromo
+function esPalindromo(str) {
+  // Eliminar espacios en blanco y convertir a minúsculas
+  const cleanedStr = str.toLowerCase().replace(/\s/g, "");
+  // Comparar el string original con su reverso
+  return cleanedStr === cleanedStr.split("").reverse().join("");
+}
+
+const string1 = "anita lava la tina";
+const string2 = "hello world";
+
+console.log(esPalindromo(string1));
+console.log(esPalindromo(string2));
+
+// 4- dividir dos números si utilizar el signo de división o multiplicación
+function divisionSinOperadores(dividendo, divisor) {
+  // Manejar casos especiales
+  if (divisor === 0) {
+    throw new Error("No se puede dividir por cero");
+  }
+  if (dividendo === 0) {
+    return 0;
+  }
+
+  let cociente = 0;
+  let signo = 1;
+
+  // Manejar signo
+  if ((dividendo < 0 && divisor > 0) || (dividendo > 0 && divisor < 0)) {
+    signo = -1;
+  }
+
+  // Convertir ambos números a positivos
+  dividendo = Math.abs(dividendo);
+  divisor = Math.abs(divisor);
+
+  // Sustracción repetida
+  while (dividendo >= divisor) {
+    dividendo -= divisor;
+    cociente++;
+  }
+
+  return cociente * signo;
+}
+
+console.log(divisionSinOperadores(10, 2));
+console.log(divisionSinOperadores(10, 3));
+console.log(divisionSinOperadores(-10, 3));
+
+// 5- al iterar un array de números solo una vez, indicar el elemento mayor y menor
+function encontrarMayorYMenor(array) {
+  if (array.length === 0) {
+    return null; // Devolver null si el array está vacío
+  }
+
+  let mayor = array[0];
+  let menor = array[0];
+
+  for (let i = 1; i < array.length; i++) {
+    if (array[i] > mayor) {
+      mayor = array[i];
+    }
+    if (array[i] < menor) {
+      menor = array[i];
+    }
+  }
+
+  return { mayor, menor };
+}
+
+const numeros = [4, 2, 7, 1, 9, 5];
+const resultado = encontrarMayorYMenor(numeros);
+console.log("El número mayor es:", resultado.mayor);
+console.log("El número menor es:", resultado.menor);
+
+// 6- crea una api con 4 metodos
+// 7- llena una bd con esta api que creaste
+// 8- exporta su data a un csv
